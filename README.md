@@ -5,5 +5,5 @@
 ## Build
 
 ```sh
-docker build -t gitbucket/arm64v8:4.35.3 --build-arg VERSION=4.35.3 .
+docker build -t gitbucket/arm64v8:4.35.3 --build-arg VERSION=4.35.3 -f Dockerfile .
 ```
