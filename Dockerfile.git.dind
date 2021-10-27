@@ -1,16 +1,23 @@
 FROM arm64v8/openjdk:8-jre
 
-LABEL maintainer="Naoki Takezoe <takezoe [at] gmail.com>"
+LABEL maintainer="Junya Shikishima"
 
+# Install GitBucket
 ARG VERSION
-
 ADD https://github.com/gitbucket/gitbucket/releases/download/${VERSION}/gitbucket.war /opt/gitbucket.war
-
 RUN ln -s /gitbucket /root/.gitbucket
+VOLUME /gitbucket
 
+# Install Git
 RUN apt update && \
     apt install -y \
-        git \
+        git  && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Docker
+RUN apt update && \
+    apt install -y \
         ca-certificates \
         curl \
         gnupg \
@@ -26,7 +33,9 @@ RUN apt update && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
-VOLUME /gitbucket
+# Install Docker-Compose
+RUN curl -L https://github.com/docker/compose/releases/download/v2.0.1/docker-compose-`uname -s`-`uname -m` -o /usr/libexec/docker/cli-plugins && \
+    chmod +x /usr/libexec/docker/cli-plugins/docker-compose
 
 # Port for web page and Port for SSH access to git repository (Optional)
 EXPOSE 8080 29418
