@@ -34,7 +34,7 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Docker-Compose
-RUN curl -L https://github.com/docker/compose/releases/download/v2.0.1/docker-compose-`uname -s`-`uname -m` -o /usr/libexec/docker/cli-plugins && \
+RUN curl -L https://github.com/docker/compose/releases/download/v2.0.1/docker-compose-`uname -s`-`uname -m` -o /usr/libexec/docker/cli-plugins/docker-compose && \
     chmod +x /usr/libexec/docker/cli-plugins/docker-compose
 
 # Port for web page and Port for SSH access to git repository (Optional)
